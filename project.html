@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+
+    <style>
+        body {
+            background-color: rgb(44, 43, 43);
+        }
+
+        .main {
+            background-color: rgb(69, 63, 63);
+            height: 380px;
+            width: 350px;
+            margin: auto;
+            padding: 10px;
+            text-align: center;
+            margin-top: 180px;
+            box-shadow: 10px 10px 5px black;
+            color: aliceblue;
+            font-size: 20px;
+            border-radius: 10px;
+        }
+        .buttonn {
+            margin: 20px;
+            font-weight: bold;
+            padding: 4px;
+            font-size: 20px;
+            color: white;
+            background-color: gray;
+        }
+
+        .buttonn:hover {
+            background-color: black;
+        }
+        #temp{
+            margin:10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <form id="tempCalc" onsubmit="calculateTemp(); return false">
+            <h4>Enter the Temperature you'd like to convert.</h4>
+            <div class="row my-3">
+                <div class="col">
+                    <input type="number" id="temp" class="form-control">
+                </div>
+                <div class="col">
+                    <select name="temp_diff" class="form-control" id="temp_diff">
+                        <option value="cel">°Celsius</option>
+                        <option value="fah">°Fahrenheit</option>
+                        <option value="kel">°Kelvin</option>
+                    </select>
+                    <h5>Enter format in which you want temperature</h5>
+                    <select name="temp_diff2" class="form-control" id="temp_diff2">
+                        <option value="cel2">°Celsius</option>
+                        <option value="fah2">°Fahrenheit</option>
+                        <option value="kel2">°Kelvin</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="buttonn">Submit</button>
+            <br />
+            <span id="resultContainer"></span>
+        </form>
+    </div>
+    <script>
+        const calculateTemp = () => {
+            const numberTemp = document.getElementById('temp').value;
+
+            const tempSelected = document.querySelector('#temp_diff');
+            const valeTemp = temp_diff.options[tempSelected.selectedIndex].value;
+
+            const tempSelected2 = document.querySelector('#temp_diff2');
+            const valeTemp2 = temp_diff2.options[tempSelected2.selectedIndex].value;
+
+            const celTOfah = (cel) => {
+                let fahrenheit = (cel * (9 / 5) + 32);
+                return fahrenheit;
+            }
+
+            const fahTOcel = (fehr) => {
+                let celsius = ((fehr - 32) * 5 / 9);
+                return celsius;
+            }
+
+            const fahTOkel=(fehr)=>{
+                let kelvin=((fehr-32)*5/9 + 273.15);
+                return kelvin;
+            }
+            const kelTOfah=(kel)=>{
+                let fahrenheit=((kel-273.15)*9/5 + 32);
+                return fahrenheit;
+            }
+
+            const kelTOcel=(kel)=>{
+                let celsius=kel-273.15;
+                return celsius;
+            }
+
+            const celTOkel=(cel)=>{
+                let kelvin=parseFloat(cel) + 273.15;
+                return kelvin;
+            }
+
+            let result;
+            if (valeTemp == "cel" && valeTemp2=="fah2") {
+                result = celTOfah(numberTemp);
+                document.getElementById('resultContainer').innerHTML = ` ${result} ° Fahrenheit`;
+            } 
+            else if(valeTemp == "cel" && valeTemp2=="kel2"){
+                result = celTOkel(numberTemp);
+                document.getElementById('resultContainer').innerHTML = ` ${result} ° Kelvin`;
+            }
+            else if(valeTemp == "fah" && valeTemp2=="kel2"){
+                result = fahTOkel(numberTemp);
+                document.getElementById('resultContainer').innerHTML = ` ${result} ° Kelvin`;
+            }
+            else if(valeTemp == "fah" && valeTemp2=="cel2"){
+                result = fahTOcel(numberTemp);
+                document.getElementById('resultContainer').innerHTML = ` ${result} ° Celsius`;
+            }
+            else if(valeTemp == "kel" && valeTemp2=="cel2"){
+                result = kelTOcel(numberTemp);
+                document.getElementById('resultContainer').innerHTML = ` ${result} ° Celsius`;
+            }
+            else if(valeTemp == "kel" && valeTemp2=="fah2"){
+                result = kelTOfah(numberTemp);
+                document.getElementById('resultContainer').innerHTML = ` ${result} ° Fahrennheit`;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
